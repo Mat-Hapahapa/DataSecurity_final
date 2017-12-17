@@ -1,9 +1,13 @@
 package Interfaces;
 
-public interface IConnection {
+import java.rmi.Remote;
+import java.rmi.RemoteException;
+import java.security.PublicKey;
 
-    String getPublicKey();
-    boolean connect(byte[] payload);
-    void sendData(byte[] payload);
+public interface IConnection extends Remote {
+
+    PublicKey getPublicKey() throws RemoteException;
+    String getToken(String id, PublicKey key) throws RemoteException;
+    void sendData(String payload, String token) throws RemoteException;
 
 }

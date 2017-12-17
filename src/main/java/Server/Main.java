@@ -19,8 +19,6 @@ public class Main {
 
         generateKeys();
 
-        testfunc();
-
         Registry registry = LocateRegistry.createRegistry(5099);
         registry.rebind("server", new ServerManager());
         System.out.println("Server started");
@@ -38,16 +36,20 @@ public class Main {
         }
     }
 
-    private static void testfunc(){
+    /*
+    private static void testfunc() throws RemoteException {
+
+        ServerManager sm = new ServerManager();
+
         AsymmetricCryptography ac = null;
         try {
             ac = new AsymmetricCryptography();
-            PrivateKey privateKey = ac.getPrivate("KeyStorage/privateKey");
-            PublicKey publicKey = ac.getPublic("KeyStorage/publicKey");
+            PrivateKey privateKey = sm.getPrivate("KeyStorage/privateKey");
+            PublicKey publicKey = sm.getPublic("KeyStorage/publicKey");
 
             String msg = "Cryptography is fun!";
-            String encrypted_msg = ac.encryptText(msg, privateKey);
-            String decrypted_msg = ac.decryptText(encrypted_msg, publicKey);
+            String encrypted_msg = ac.encryptText(msg, publicKey);
+            String decrypted_msg = ac.decryptText(encrypted_msg, privateKey);
             System.out.println("Original Message: " + msg +
                     "\nEncrypted Message: " + encrypted_msg
                     + "\nDecrypted Message: " + decrypted_msg);
@@ -55,5 +57,5 @@ public class Main {
             e.printStackTrace();
         }
 
-    }
+    }*/
 }
