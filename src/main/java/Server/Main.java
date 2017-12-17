@@ -47,10 +47,10 @@ public class Main {
 
             String msg = "Cryptography is fun!";
             String encrypted_msg = ac.encryptText(msg, privateKey);
-            //String decrypted_msg = ac.decryptText(encrypted_msg, publicKey);
+            String decrypted_msg = ac.decryptText(encrypted_msg, publicKey);
             System.out.println("Original Message: " + msg +
                     "\nEncrypted Message: " + encrypted_msg
-                    /*+ "\nDecrypted Message: " + decrypted_msg*/);
+                    + "\nDecrypted Message: " + decrypted_msg);
         } catch (Exception e) {
             e.printStackTrace();
         }

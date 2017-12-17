@@ -1,5 +1,7 @@
 package Cryptography;
 
+import org.apache.commons.codec.binary.Base64;
+
 import javax.crypto.BadPaddingException;
 import javax.crypto.Cipher;
 import javax.crypto.IllegalBlockSizeException;
@@ -65,17 +67,17 @@ public class AsymmetricCryptography {
             UnsupportedEncodingException, IllegalBlockSizeException,
             BadPaddingException, InvalidKeyException {
         this.cipher.init(Cipher.ENCRYPT_MODE, key);
-        return cipher.doFinal(msg.getBytes("UTF-8")).toString();
+        //return cipher.doFinal(msg.getBytes("UTF-8")).toString();
 
-        //return Base64.encodeBase64String(cipher.doFinal(msg.getBytes("UTF-8")));
+        return Base64.encodeBase64String(cipher.doFinal(msg.getBytes("UTF-8")));
     }
 
     public String decryptText(String msg, PublicKey key)
             throws InvalidKeyException, UnsupportedEncodingException,
             IllegalBlockSizeException, BadPaddingException {
         this.cipher.init(Cipher.DECRYPT_MODE, key);
-        return cipher.doFinal(msg.getBytes("UTF-8")).toString();
-        //return new String(cipher.doFinal(Base64.decodeBase64(msg)), "UTF-8");
+        //return cipher.doFinal(msg.getBytes("UTF-8")).toString();
+        return new String(cipher.doFinal(Base64.decodeBase64(msg)), "UTF-8");
     }
 
     public byte[] getFileInBytes(File f) throws IOException {
