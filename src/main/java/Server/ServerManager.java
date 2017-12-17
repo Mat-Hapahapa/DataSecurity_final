@@ -1,6 +1,7 @@
 package Server;
 
 import Cryptography.AsymmetricCryptography;
+import Cryptography.SymmetricCryptography;
 import Interfaces.IConnection;
 
 import java.io.File;
@@ -21,11 +22,15 @@ public class ServerManager extends UnicastRemoteObject implements IConnection {
     private static String PUBLICKEYPATH = "KeyStorage/publicKey";
     private static String PRIVATEKEYPATH = "KeyStorage/privateKey";
 
-    private AsymmetricCryptography ac;
+    private AsymmetricCryptography AC;
+    private SymmetricCryptography SC;
+
+    byte[] token;
 
     protected ServerManager() throws RemoteException {
         super();
-        ac = new AsymmetricCryptography();
+        AC = new AsymmetricCryptography();
+        SC = new SymmetricCryptography();
     }
 
 
@@ -36,14 +41,18 @@ public class ServerManager extends UnicastRemoteObject implements IConnection {
 
     @Override
     public String getToken(String id, PublicKey key) {
-        String sensorID = ac.decryptText(id, getPrivate(PRIVATEKEYPATH));
+        String sensorID = AC.decryptText(id, getPrivate(PRIVATEKEYPATH));
         //TODO: Match sensorID with enrolled sensors
-        return ac.encryptText(sensorID, key);
+
+        token = SC.generateSecretKey(sensorID);
+        return AC.encryptText(new String(token), key);
     }
 
     @Override
-    public void sendData(String payload, String token) {
-        System.out.println(ac.decryptText(payload,getPrivate(PRIVATEKEYPATH)));
+    public void sendData(byte[] payload) {
+
+        System.out.println(SC.decryptText(payload, token));
+        //TODO: Save data in database
     }
 
 

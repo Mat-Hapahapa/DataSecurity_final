@@ -8,6 +8,6 @@ public interface IConnection extends Remote {
 
     PublicKey getPublicKey() throws RemoteException;
     String getToken(String id, PublicKey key) throws RemoteException;
-    void sendData(String payload, String token) throws RemoteException;
+    void sendData(byte[] payload) throws RemoteException;
 
 }
